@@ -108,6 +108,8 @@ def mostrarBusca(dicBusca):
         except Exception as  e:
             writeConsole(str(e),  consoleType.ERROR)
     writeConsole("Resultado da busca realizada por '{0}' e '{1}': {3} empresa(s) ({2})".format(dicBusca["product"],  dicBusca["company_state"],  dicBusca["time"],  dicBusca["tamanho"]),  consoleType.SUCCESS,  False)
+    if dicBusca["arquivo"] != None:
+        writeConsole("Consulta gravada em {0}.".format(dicBusca["arquivo"]), consoleType.SUCCESS,  False)
  
 def gravarCSV(listEmpresas):
     try:
@@ -122,7 +124,6 @@ def gravarCSV(listEmpresas):
             output.write(header)
             for empresa in listEmpresas:
                 output.write(empresa+"\n")
-        writeConsole("Consulta gravada em {0}.".format(TEMP_DIR + arquivo), consoleType.SUCCESS)
         return TEMP_DIR + arquivo
     except Exception as  e:
         writeConsole(str(e),  consoleType.ERROR)
@@ -130,11 +131,11 @@ def gravarCSV(listEmpresas):
 #----------------------------------------------------------
 # Rotina principal
 #----------------------------------------------------------
-listHistBuscas = []
+listHistBuscas = None
 try:
     listHistBuscas = util.lerHistoricoBuscas()
 except Exception as  e:
-    writeConsole(str(e),  consoleType.ERROR)
+    listHistBuscas = []
     
 if not os.path.exists(TEMP_DIR):
     os.mkdir(TEMP_DIR)
