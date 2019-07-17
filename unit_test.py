@@ -28,7 +28,7 @@ for l in lista:
     print(l)
 
 print("\nBusca vazia")
-lista = util.buscarEmpresas("michael jackson", "EUA") # a ordem não pode influenciar 'PR,RJ' = 'RJ,PR'
+lista = util.buscarEmpresas("michael jackson", "EUA")
 for l in lista:
     print(l)
 
