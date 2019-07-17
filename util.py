@@ -101,11 +101,9 @@ def buscarEmpresasAPI(listaEmpresas, product,  company_state):
     response = requests.get(url)
     listDic = response.json()
     for dic in listDic:
-        empresa = escreverEmpresa(dic, product)
-        if empresa != None:
-            listaEmpresas.append(empresa)
+        escreverEmpresa(dic, product, listaEmpresas)
     
-def escreverEmpresa(dicCostumer,  product_name):
+def escreverEmpresa(dicCostumer,  product_name, listaEmpresas):
     company_Id = dicCostumer["company_Id"]
     listState = dicCostumer["company_state"]
     state = ""
@@ -120,8 +118,7 @@ def escreverEmpresa(dicCostumer,  product_name):
         product_price =  dicProduct["product_price"] if dicProduct["product_price"] != None else ""
         line = "{0};{1};{2};{3}".format(product, company_Id, product_price, state)
         if product_name == product: 
-            return line # desconsiderei casos em que ha repeticao do 'product' na 'Products_list', nesse caso pego a 1a ocorrencia
-    return None
+            listaEmpresas.append(line) # considero casos em que ha repeticao do 'product' na 'Products_list', pego todas as ocorrencias
     
 def gravarHistoricoBuscas(listHistBuscas):
     with open(ARQ_HIST_BUSCAS, 'w') as f:
